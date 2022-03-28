@@ -1,4 +1,4 @@
-name: ci
+name: TechTrends - Package with Docker
 
 on:
   push:
@@ -25,7 +25,6 @@ jobs:
         name: Build and Push
         uses: docker/build-push-action@v2
         with:
-          context: nd064_course_1/project
           file:  nd064_course_1/project/techtrends/Dockerfile
           push: true
           tags: techtrends:latest
