@@ -1,5 +1,5 @@
 ## Docker commands used to build the application 
-FROM python:2.7
+FROM python:3.8
 LABEL maintainer="Jake Fund"
 COPY ./project/techtrends /app
 
