@@ -1,5 +1,7 @@
 import sqlite3
-from jinja2.utils import markupsafe >>> markupsafe.Markup() Markup('')
+from jinja2.utils import markupsafe 
+markupsafe.Markup() 
+Markup('')
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 
