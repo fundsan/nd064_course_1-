@@ -1,4 +1,5 @@
 import sqlite3
+import logging
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
 
@@ -43,7 +44,29 @@ def post(post_id):
 @app.route('/about')
 def about():
     return render_template('about.html')
+@app.route('/healthz')
+def health_check():
+    response = app.response_class(
+        response={"result": "OK - healthy"},
+        status=200,
+        mimetype='application/json'
+    )
 
+    return response
+
+@app.route('/metrics')
+def metric():
+    connection = get_db_connection()
+    posts = connection.execute('SELECT * FROM posts').fetchall()
+    connection.close()
+    response = app.response_class(
+        response= {
+                            "db_connection_count": int(connection.row_factory) , "post_count": len(posts)},
+        status=200,
+        mimetype='application/json'
+    )
+
+    return response
 # Define the post creation functionality 
 @app.route('/create', methods=('GET', 'POST'))
 def create():
