@@ -6,20 +6,21 @@ docker build -t techtrends .
 docker run -d -p 7111:3111 techtrends
 ## Docker commands used to get the application logs
 # TODO: insert the docker logs command
-docker logs 815b49d48ac7
+docker logs 86fca92ed6327ab1057c509dcf2509f1c237b3622be9a0f33d6c8d01826aff51
 ## Logs from the container running the TechTrends application
 # TODO: paste logs from the Docker container 
-
  * Serving Flask app "app" (lazy loading)
  * Environment: production
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
  * Debug mode: off
- * Running on http://0.0.0.0:3111/ (Press CTRL+C to quit)
-172.17.0.1 - - [24/Mar/2022 04:02:37] "GET / HTTP/1.1" 200 -
-172.17.0.1 - - [24/Mar/2022 04:02:37] "GET /static/css/main.css HTTP/1.1" 200 -
-172.17.0.1 - - [24/Mar/2022 04:02:37] "GET /favicon.ico HTTP/1.1" 404 -
-172.17.0.1 - - [24/Mar/2022 04:02:42] "GET /1 HTTP/1.1" 200 -
-172.17.0.1 - - [24/Mar/2022 04:03:15] "GET /create HTTP/1.1" 200 -
-172.17.0.1 - - [24/Mar/2022 04:03:21] "POST /create HTTP/1.1" 302 -
-172.17.0.1 - - [24/Mar/2022 04:03:21] "GET / HTTP/1.1" 200 -
+2022-04-14 06:25:49,388 -  * Running on http://0.0.0.0:3111/ (Press CTRL+C to quit)
+2022-04-14 06:26:40,388 - 172.17.0.1 - - [14/Apr/2022 06:26:40] "GET / HTTP/1.1" 200 -
+2022-04-14 06:26:40,439 - 172.17.0.1 - - [14/Apr/2022 06:26:40] "GET /static/css/main.css HTTP/1.1" 200 -
+2022-04-14 06:26:40,452 - 172.17.0.1 - - [14/Apr/2022 06:26:40] "GET /favicon.ico HTTP/1.1" 404 -
+2022-04-14 06:26:43,974 - 172.17.0.1 - - [14/Apr/2022 06:26:43] "GET /create HTTP/1.1" 200 -
+2022-04-14 06:26:58,796 - Article "Making New Stuff" created
+2022-04-14 06:26:58,797 - 172.17.0.1 - - [14/Apr/2022 06:26:58] "POST /create HTTP/1.1" 302 -
+2022-04-14 06:26:58,805 - 172.17.0.1 - - [14/Apr/2022 06:26:58] "GET / HTTP/1.1" 200 -
+2022-04-14 06:30:05,384 - 172.17.0.1 - - [14/Apr/2022 06:30:05] "GET /metrics/ HTTP/1.1" 404 -
+2022-04-14 06:30:12,526 - 172.17.0.1 - - [14/Apr/2022 06:30:12] "GET /metrics HTTP/1.1" 200 -
