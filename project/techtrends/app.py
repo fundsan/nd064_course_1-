@@ -1,11 +1,15 @@
 import sqlite3
 import logging
+import sys
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
-
+global connection_count
+connection_count = 0    
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
+    global connection_count
+    connection_count +=1
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
     return connection
@@ -36,18 +40,22 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
+      app.logger.debug('NO ARTICLE FOUND FOR POST:{}'.format(post_id))
       return render_template('404.html'), 404
     else:
+      app.logger.debug('Article "{}" retrieved'.format(get_post(post_id)[0]))
       return render_template('post.html', post=post)
 
 # Define the About Us page
 @app.route('/about')
 def about():
+    app.logger.debug('About Us page retrieved')
+
     return render_template('about.html')
 @app.route('/healthz')
 def health_check():
     response = app.response_class(
-        response={"result": "OK - healthy"},
+        response=json.dumps({"result": "OK - healthy"}),
         status=200,
         mimetype='application/json'
     )
@@ -60,12 +68,12 @@ def metric():
     posts = connection.execute('SELECT * FROM posts').fetchall()
     connection.close()
     response = app.response_class(
-        response= {
-                            "db_connection_count": int(connection.row_factory) , "post_count": len(posts)},
+        response=json.dumps( {
+                            "db_connection_count": connection_count, "post_count": len(posts)}),
         status=200,
         mimetype='application/json'
     )
-
+  
     return response
 # Define the post creation functionality 
 @app.route('/create', methods=('GET', 'POST'))
@@ -82,6 +90,7 @@ def create():
                          (title, content))
             connection.commit()
             connection.close()
+            app.logger.debug('Article "{}" created'.format(title))
 
             return redirect(url_for('index'))
 
@@ -89,4 +98,6 @@ def create():
 
 # start the application on port 3111
 if __name__ == "__main__":
-   app.run(host='0.0.0.0', port='3111')
+
+  logging.basicConfig(stream = sys.stdout,level=logging.DEBUG,format="%(asctime)s - %(message)s")
+  app.run(host='0.0.0.0', port='3111')
