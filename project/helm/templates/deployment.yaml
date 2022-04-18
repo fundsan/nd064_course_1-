@@ -22,5 +22,7 @@ spec:
     spec:
       containers:
       - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
-        imagePullPolicy: IfNotPresent 
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: techtrends
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
